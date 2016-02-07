@@ -1,4 +1,13 @@
-Loading and preprocessing the data
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
+
+
+## Loading and preprocessing the data
+```{r}
 
 #Load the data (i.e. read.csv())
 df <- read.csv("activity.csv")
@@ -6,8 +15,11 @@ df <- read.csv("activity.csv")
 #Process/transform the data (if necessary) into a format suitable for your analysis
 df$date <- as.Date(df$date)
 
-What is mean total number of steps taken per day?
+```
 
+
+## What is mean total number of steps taken per day?
+```{r}
 #histogram of the total number of steps taken each day
 library(ggplot2)
 total.steps.by.day <- aggregate(x = df$steps , by = list(df$date), FUN = sum ,na.rm=TRUE)
@@ -23,8 +35,10 @@ mean(total.steps.by.day$steps , na.rm = TRUE)
 #median total number of steps taken per day
 median(total.steps.by.day$steps , na.rm = TRUE)
 
-What is the average daily activity pattern?
+```
 
+## What is the average daily activity pattern?
+```{r}
 #Time series plot of 5-minute interval and the average number of steps taken, averaged across all days
 average.steps.by.interval  <- aggregate(x = df$steps , by = list(df$interval), FUN = mean ,na.rm=TRUE)
 names(average.steps.by.interval) <- c("interval","steps")
@@ -37,8 +51,11 @@ avg.step.line
 #The 5-min time interval contains the maximum number of steps?
 average.steps.by.interval[which.max(average.steps.by.interval$steps),c("interval")]
 
-Imputing missing values
+```
 
+
+## Imputing missing values
+```{r}
 #total number of missing values in the dataset
 nrow(df[is.na(df$steps),])
 
@@ -69,8 +86,11 @@ mean(total.steps.by.day$steps , na.rm = TRUE)
 #median total number of steps taken per day
 median(total.steps.by.day$steps , na.rm = TRUE)
 
-Are there differences in activity patterns between weekdays and weekends?
+```
 
+
+## Are there differences in activity patterns between weekdays and weekends?
+```{r, fig.width= 10}
 #Factor variable with two levels indicating a weekday or weekend.
 df.imputed$weekday <- as.factor(ifelse(weekdays(df.imputed$date) %in% c("Saturday","Sunday"), "Weekend", "Weekday")) 
 
@@ -85,4 +105,7 @@ avg.step.line <- ggplot(average.steps.by.interval.and.weekday,aes(interval,steps
                  facet_grid(. ~ weekday) +
                  geom_line(size = 1)
 avg.step.line  
+
+
+```
 
