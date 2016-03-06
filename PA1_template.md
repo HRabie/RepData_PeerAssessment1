@@ -1,9 +1,6 @@
----
-title: "PA1_template.Rmd"
-author: "Hassan Rabie"
-date: "February 7, 2016"
-output: html_document
----
+# PA1_template.Rmd
+Hassan Rabie  
+February 7, 2016  
 
  title: "Reproducible Research: Course Project1"
  
@@ -24,6 +21,13 @@ df$date <- as.Date(df$date)
 #Histogram shows the total number of steps taken in each day
 #Load the library ggplot2 to draw histogram
 library(ggplot2)
+```
+
+```
+## Warning: package 'ggplot2' was built under R version 3.2.3
+```
+
+```r
 TotalSteps <- aggregate(x = df$steps , by = list(df$date), FUN = sum ,na.rm=TRUE)
 names(TotalSteps) <- c("date","steps")
 HistogramPlot <- ggplot(TotalSteps,aes(x = steps)) +
@@ -33,7 +37,7 @@ HistogramPlot <- ggplot(TotalSteps,aes(x = steps)) +
 HistogramPlot
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
 
 ```r
 #Calculating the mean total number of steps taken per day
@@ -66,7 +70,7 @@ TimeSeriesPlot <- ggplot(AVGSteps,aes(interval,steps)) +
 TimeSeriesPlot
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
 
 ```r
 #The 5-min time interval contains the maximum number of steps?
@@ -80,8 +84,8 @@ AVGSteps[which.max(AVGSteps$steps),c("interval")]
 ## Q3->Imputing missing values
 
 ```r
-#Calculating total number of missing values in the dataset
-nrow(df[is.na(df$steps),])
+ #Calculating total number of missing values in the dataset
+  nrow(df[is.na(df$steps),])
 ```
 
 ```
@@ -111,24 +115,24 @@ HistogramPlot <- ggplot(TotalSteps,aes(x = steps)) +
 HistogramPlot 
 ```
 
-![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
 
 ```r
 #mean total number of steps taken per day
-mean(total.steps.by.day$steps)
+mean(TotalSteps$steps)
 ```
 
 ```
-## Error in mean(total.steps.by.day$steps): object 'total.steps.by.day' not found
+## [1] 10766.19
 ```
 
 ```r
 #median total number of steps taken per day
-median(total.steps.by.day$steps)
+median(TotalSteps$steps)
 ```
 
 ```
-## Error in median(total.steps.by.day$steps): object 'total.steps.by.day' not found
+## [1] 10766.19
 ```
 
 ## Q3->Are there differences in activity patterns between weekdays and weekends?
@@ -149,5 +153,5 @@ AVGPlotline <- ggplot(AVGWeekday,aes(interval,steps)) +
 AVGPlotline
 ```
 
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
